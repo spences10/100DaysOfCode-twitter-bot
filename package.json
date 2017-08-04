@@ -6,18 +6,11 @@
   "scripts": {
     "start": "node index.js",
     "test": "snyk test && jest --coverage",
-    "dev": "jest --coverage && node index.js && nodemon -e",
+    "dev": "jest --coverage && nodemon index.js",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect"
   },
-  "keywords": [
-    "#100daysofcode",
-    "Twitter",
-    "JavaScript",
-    "Nodejs",
-    "npm",
-    "retweet"
-  ],
+  "keywords": [ "#100daysofcode", "Twitter", "JavaScript", "Nodejs", "npm", "retweet" ],
   "engines": {
     "node": "~6.1.0",
     "npm": "~.3.8.6"
@@ -29,7 +22,8 @@
   "license": " BSD 3-Clause License",
   "devDependencies": {
     "jest-cli": "^19.0.2",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "prettier": "1.5.3"
   },
   "dependencies": {
     "contributor": "0.1.25",
