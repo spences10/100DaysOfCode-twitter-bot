@@ -14,8 +14,8 @@ module.exports = {
     access_token: process.env.TWITTER_ACCESS_TOKEN,
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
     username: process.env.TWITTER_USERNAME,
-    retweet: process.env.TWITTER_RETWEET_RATE,
-    favorite: process.env.TWITTER_FAVORITE_RATE
+    retweet: process.env.TWITTER_RETWEET_RATE * 1000 * 60,
+    favorite: process.env.TWITTER_FAVORITE_RATE * 1000 * 60
   },
   sentiment_api_key: process.env.SENTIMENT_KEY,
   queryString: process.env.QUERY_STRING
