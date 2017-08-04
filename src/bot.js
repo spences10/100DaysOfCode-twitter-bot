@@ -2,6 +2,9 @@
 
 console.log('Welcome #100DaysOfCode Twitter Bot')
 
+// listen on port so now.sh likes it
+const { createServer } = require('http')
+
 // Dependencies
 const schedule = require('node-schedule')
 const twit = require('twit')
@@ -41,10 +44,17 @@ var job = schedule.scheduleJob(rule, () => {
   projectOfTheDay()
 })
 
-// Refresh LevelDB every 24 hrs
-setInterval(refreshDb, 1000 * 60 * 60 * 24)
-
 sentimentBot()
+
+// This will cause the bot/server to run on now.sh
+const server = createServer((req, res) => {
+  res.writeHead(302, {
+    Location: `https://twitter.com/${config.twitter.username}`
+  })
+  res.end()
+})
+
+server.listen(3000)
 
 // ABANDONED API(s)
 
