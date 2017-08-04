@@ -4,7 +4,7 @@ const sentiment = require('../helpers/sentiment')
 const config = require('../config')
 const twit = require('twit')
 const T = new twit(config.twitter)
-const db = require('../helpers/db')
+// const db = require('../helpers/db')
 
 const hashtagStream2 = T.stream('statuses/filter', {
   track: config.queryString
@@ -33,13 +33,13 @@ const sentimentBot =  () => {
         let screen_name = tweet.user.screen_name
 
         // Check key isn't in db already, key being the screen_name
-        db.get(screen_name, (err, value) => {
+        // db.get(screen_name, (err, value) => {
 
           if (typeof(value) !== 'undefined') {
             console.log('ALREADY IN DB USER ', screen_name)
           } else {
             // Put a user name and that they have been encouraged
-            db.put(screen_name, 'encourage', (err) => {
+            // db.put(screen_name, 'encourage', (err) => {
               // some kind of I/O error
               if (err) return console.log('Ooops!', err)
 
@@ -47,9 +47,9 @@ const sentimentBot =  () => {
 
               // tweet a random encouragement phrase
               tweetNow('@' + screen_name + ' ' + phrase)
-            })
+            // })
           }
-        })
+        // })
       }
     })
   })

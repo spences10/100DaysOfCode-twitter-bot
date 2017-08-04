@@ -16,7 +16,6 @@ const retweet = require('./api/retweet')
 const favorite = require('./api/favorite')
 const reply = require('./api/reply')
 const projectOfTheDay = require('./api/project-of-day')
-const refreshDb = require('./api/refresh-db')
 const sentimentBot = require('./api/sentiment')
 
 // Frequency in minutes
