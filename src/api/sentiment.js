@@ -17,15 +17,22 @@ const sentimentBot = () => {
     //  Setup the http call
     const httpCall = sentiment.init()
 
-    // Don't do anything if it's the bot tweet
-    if (tweet.user.screen_name == '_100DaysOfCode') return
+    // Don't do anything if bot is in blacklist
+    const blacklist = config.twitterConfig.blacklist.split(',')
+    if (blacklist.indexOf(tweet.user.screen_name) > -1) {
+      console.log('====================')
+      console.log('USER IN BLACKLIST: ', tweet.user.screen_name)
+      console.log('====================')
+      return
+    }
+
+    console.log('====================')
+    console.log('tweet text = ', tweet.text)
+    console.log('====================')
 
     httpCall.send('txt=' + tweet.text).end((result) => {
       let sentim = result.body.result.sentiment
       let confidence = parseFloat(result.body.result.confidence)
-      console.log('====================')
-      console.log('tweet text = ', tweet.text)
-      console.log('====================')
       // if sentiment is Negative and the confidence is above 75%
       if (sentim == 'Negative' && confidence >= 75) {
         console.log('====================')
