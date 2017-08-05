@@ -3,11 +3,11 @@
 const sentiment = require('../helpers/sentiment')
 const config = require('../config')
 const twit = require('twit')
-const bot = new twit(config.twitter)
+const bot = new twit(config.twitterKeys)
 // const db = require('../helpers/db')
 
 const hashtagStream2 = bot.stream('statuses/filter', {
-  track: config.queryString
+  track: config.twitterConfig.queryString
 })
 
 const sentimentBot = () => {
