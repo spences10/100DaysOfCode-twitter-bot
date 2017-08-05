@@ -5,14 +5,16 @@ const paramters = require('./parameters')
 const uniqueRandom = require('unique-random-array')
 const twit = require('twit')
 
-const T = new twit(config.twitter)
+const bot = new twit(config.twitter)
 
 // function: tweets back to user who followed
 function tweetNow(text) {
-  let tweet = {status: text}
+  let tweet = { status: text }
 
-  T.post('statuses/update', tweet, (err, data, response) => {
-    if (err) {console.log('ERROR: Cannot Reply. Not a first time follower')}
+  bot.post('statuses/update', tweet, (err, data, response) => {
+    if (err) {
+      console.log('ERROR: Cannot Reply. Not a first time follower')
+    }
     console.log('SUCCESS: Replied to Follower')
   })
 }
@@ -32,7 +34,7 @@ const reply = (event) => {
     `Awesome @${screenName}, thanks for following!`,
     `Thanks for the follow @${screenName}!`,
     `Thanks for the following @${screenName}! How are you today?`
-  ]);
+  ])
 
   let response = randomReply()
   tweetNow(response)
