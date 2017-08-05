@@ -9,7 +9,7 @@ const { createServer } = require('http')
 const schedule = require('node-schedule')
 const twit = require('twit')
 const config = require('./config')
-const bot = new twit(config.twitter)
+const bot = new twit(config.twitterKeys)
 
 // Import API functions
 const retweet = require('./api/retweet')
