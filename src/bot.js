@@ -19,7 +19,9 @@ const projectOfTheDay = require('./api/project-of-day')
 const sentimentBot = require('./api/sentiment')
 
 // Frequency in minutes
-const frequency = config.twitter.retweet
+const retweetFrequency = config.twitterConfig.retweet
+const favoriteFrequency = config.twitterConfig.favorite
+
 const firstOrLastDayFrequency = 40
 
 // Retweet
@@ -34,7 +36,7 @@ userStream.on('follow', reply)
 
 // Use cron-job to schedule Project of the day
 const rule = new schedule.RecurrenceRule()
-rule.dayOfWeek = [0, new schedule.Range(1,6)]
+rule.dayOfWeek = [ 0, new schedule.Range(1, 6) ]
 rule.hour = 11
 rule.minute = 59
 
@@ -48,7 +50,7 @@ sentimentBot()
 // This will cause the bot/server to run on now.sh
 const server = createServer((req, res) => {
   res.writeHead(302, {
-    Location: `https://twitter.com/${config.twitter.username}`
+    Location: `https://twitter.com/${config.twitterConfig.username}`
   })
   res.end()
 })
@@ -105,4 +107,3 @@ server.listen(3000)
 // function checkTweetForText(tweetText, value) {
 //   return tweetText.toLowerCase().indexOf(value) > -1 && tweetText.toLowerCase().indexOf('100daysofcode') > -1
 // }
-
