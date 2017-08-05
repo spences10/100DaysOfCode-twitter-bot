@@ -30,5 +30,6 @@ module.exports = {
   graphqlConfig: {
     endpoint: process.env.ENDPOINT,
     project: process.env.ACCESS_TOKEN
-  }
+  },
+  sentimentKey: process.env.SENTIMENT_KEY
 }
