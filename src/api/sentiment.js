@@ -5,6 +5,7 @@ const config = require('../config')
 const twit = require('twit')
 const bot = new twit(config.twitterKeys)
 // const db = require('../helpers/db')
+const dbAddTweet = require('../helpers/dbAddTweet')
 
 const hashtagStream2 = bot.stream('statuses/filter', {
   track: config.twitterConfig.queryString
@@ -18,6 +19,7 @@ const sentimentBot = () => {
     const httpCall = sentiment.init()
 
     // Don't do anything if bot is in blacklist
+    // TODO add to handle tweet function
     const blacklist = config.twitterConfig.blacklist.split(',')
     if (blacklist.indexOf(tweet.user.screen_name) > -1) {
       console.log('====================')
@@ -25,10 +27,6 @@ const sentimentBot = () => {
       console.log('====================')
       return
     }
-
-    console.log('====================')
-    console.log('tweet text = ', tweet.text)
-    console.log('====================')
 
     httpCall.send('txt=' + tweet.text).end((result) => {
       let sentim = result.body.result.sentiment
@@ -43,13 +41,14 @@ const sentimentBot = () => {
         let screen_name = tweet.user.screen_name
 
         // Check key isn't in db already, key being the screen_name
+        dbAddTweet(tweet)
         // db.get(screen_name, (err, value) => {
 
         // if (typeof value !== 'undefined') {
         //   console.log('ALREADY IN DB USER ', screen_name)
         // } else {
         // Put a user name and that they have been encouraged
-        // db.put(screen_name, 'encourage', (err) => {
+
         // some kind of I/O error
         // if (err) return console.log('Ooops!', err)
 
