@@ -5,7 +5,7 @@ const endpoint = config.graphqlConfig.endpoint
 
 // use varibles to avoid breaking text being added
 // https://github.com/graphcool/graphql-request#using-variables
-const addEncourage = (event) => {
+const addSentiment = (event) => {
   // create mutation passing username and encouraged variables
   const mutation = `mutation ($userName: String!, $encouraged: Boolean!) {
     createSentiment(userName: $userName, encouraged: $encouraged) {
@@ -26,4 +26,4 @@ const addEncourage = (event) => {
     .catch((err) => console.log('Error: ', err, 'Tweet Text: ', event.text, 'Mutation: ', mutation))
 }
 
-module.exports = addEncourage
+module.exports = addSentiment

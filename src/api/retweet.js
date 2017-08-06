@@ -8,7 +8,6 @@ const bot = new twit(config.twitterKeys)
 
 const retweet = () => {
   let params = paramters
-
   bot.get('search/tweets', params, (err, data) => {
     // grab tweet ID to retweet
     let retweetId = data.statuses[0].id_str

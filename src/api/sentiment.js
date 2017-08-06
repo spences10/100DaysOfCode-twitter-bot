@@ -4,8 +4,7 @@ const sentiment = require('../helpers/sentiment')
 const config = require('../config')
 const twit = require('twit')
 const bot = new twit(config.twitterKeys)
-// const db = require('../helpers/db')
-const dbAddTweet = require('../helpers/dbAddTweet')
+const dbAddSentiment = require('../helpers/dbAddSentiment')
 
 const hashtagStream2 = bot.stream('statuses/filter', {
   track: config.twitterConfig.queryString
@@ -41,7 +40,7 @@ const sentimentBot = () => {
         let screen_name = tweet.user.screen_name
 
         // Check key isn't in db already, key being the screen_name
-        dbAddTweet(tweet)
+        dbAddSentiment(tweet)
         // db.get(screen_name, (err, value) => {
 
         // if (typeof value !== 'undefined') {
@@ -73,6 +72,23 @@ function tweetNow(text) {
     }
     console.log('SUCCESS: Replied to Follower')
   })
+
+  // // use the in_reply_to_status_id param for this
+
+  // bot.post(
+  //   'statuses/update',
+  //   {
+  //     status: '@ScottDevTweets I reply to you yes!',
+  //     in_reply_to_status_id: '860900406381211649'
+  //   },
+  //   (err, data, response) => {
+  //     if (err) {
+  //       console.log(err)
+  //     } else {
+  //       console.log(`${data.text} tweeted!`)
+  //     }
+  //   }
+  // )
 }
 
 module.exports = sentimentBot

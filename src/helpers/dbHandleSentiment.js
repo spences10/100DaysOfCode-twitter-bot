@@ -1,10 +1,9 @@
-const addTweet = require('./dbAddTweet')
+const dbAddSentiment = require('./dbAddSentiment')
 const checkTweet = require('./dbCheckTweet')
 
-const retweet = require('../api/retweet')
 const config = require('../config')
 
-const handleRetweet = (event) => {
+const handleSentiment = (event) => {
   const blacklist = config.twitterConfig.blacklist.split(',')
   // all teh debugs!!
   console.log('====================')
@@ -32,4 +31,4 @@ const handleRetweet = (event) => {
   }
 }
 
-module.exports = handleRetweet
+module.exports = handleSentiment
