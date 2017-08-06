@@ -1,5 +1,5 @@
 # project: cj5xrr77xm1em01459jrb9l6f
-# version: 3
+# version: 4
 
 type User implements Node {
   id: ID! @isUnique
@@ -28,7 +28,7 @@ type Tweet implements Node {
 
 type Sentiment implements Node {
   encouraged: Boolean!
-  userName: String!
+  userName: String! @isUnique
   createdAt: DateTime!
   updatedAt: DateTime!
   id: ID! @isUnique
