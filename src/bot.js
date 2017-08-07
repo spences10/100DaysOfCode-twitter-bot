@@ -16,7 +16,7 @@ const retweet = require('./api/retweet')
 const favorite = require('./api/favorite')
 const reply = require('./api/reply')
 const projectOfTheDay = require('./api/project-of-day')
-const sentimentBot = require('./api/sentiment')
+const handleSentiment = require('./helpers/dbHandleSentiment')
 
 // Frequency in minutes
 const retweetFrequency = config.twitterConfig.retweet
@@ -34,6 +34,16 @@ setInterval(favorite, favoriteFrequency)
 const userStream = bot.stream('user')
 userStream.on('follow', reply)
 
+// get .env query string
+const param = config.twitterConfig
+const trackWords = param.queryString.split(',')
+
+// use stream to track keywords
+const trackStream = bot.stream('statuses/filter', {
+  track: trackWords
+})
+trackStream.on('tweet', handleSentiment)
+
 // Use cron-job to schedule Project of the day
 const rule = new schedule.RecurrenceRule()
 rule.dayOfWeek = [ 0, new schedule.Range(1, 6) ]
@@ -44,8 +54,6 @@ var job = schedule.scheduleJob(rule, () => {
   console.log('Cron Job runs successfully')
   projectOfTheDay()
 })
-
-sentimentBot()
 
 // This will cause the bot/server to run on now.sh
 const server = createServer((req, res) => {

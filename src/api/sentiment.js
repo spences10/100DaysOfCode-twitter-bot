@@ -6,61 +6,68 @@ const twit = require('twit')
 const bot = new twit(config.twitterKeys)
 const dbAddSentiment = require('../helpers/dbAddSentiment')
 
-const hashtagStream2 = bot.stream('statuses/filter', {
-  track: config.twitterConfig.queryString
-})
+// const hashtagStream2 = bot.stream('statuses/filter', {
+//   track: config.twitterConfig.queryString
+// })
 
-const sentimentBot = () => {
-  hashtagStream2.on('tweet', (tweet) => {
-    console.log(`Sentiment Bot Running`)
+const sentimentBot = (event) => {
+  console.log('====================')
+  console.log('HERE', event.text)
+  console.log('====================')
+  // hashtagStream2.on('tweet', (event) => {
+  console.log(`Sentiment Bot Running`)
 
-    //  Setup the http call
-    const httpCall = sentiment.init()
+  //  Setup the http call
+  const httpCall = sentiment.init()
 
-    // Don't do anything if bot is in blacklist
-    // TODO add to handle tweet function
-    const blacklist = config.twitterConfig.blacklist.split(',')
-    if (blacklist.indexOf(tweet.user.screen_name) > -1) {
+  // Don't do anything if bot is in blacklist
+  // TODO add to handle tweet function
+  const blacklist = config.twitterConfig.blacklist.split(',')
+  if (blacklist.indexOf(event.user.screen_name) > -1) {
+    console.log('====================')
+    console.log('USER IN BLACKLIST: ', event.user.screen_name)
+    console.log('====================')
+    return
+  }
+
+  httpCall.send('txt=' + event.text).end((result) => {
+    let sentim = result.body.result.sentiment
+    let confidence = parseFloat(result.body.result.confidence)
+    console.log('====================')
+    console.log('SENTIMENT: ', sentim)
+    console.log('CONFIDENCE: ', confidence)
+    console.log('====================')
+    // if sentiment is Negative and the confidence is above 75%
+    if (sentim == 'Negative' && confidence >= 75) {
       console.log('====================')
-      console.log('USER IN BLACKLIST: ', tweet.user.screen_name)
+      console.log('SENTIMENT', sentim)
       console.log('====================')
-      return
+      // get a random quote
+      let phrase = sentiment.randomQuote()
+      let screen_name = event.user.screen_name
+      return sentim
+      // Check key isn't in db already, key being the screen_name
+      // dbAddSentiment(event)
+      // db.get(screen_name, (err, value) => {
+
+      // if (typeof value !== 'undefined') {
+      //   console.log('ALREADY IN DB USER ', screen_name)
+      // } else {
+      // Put a user name and that they have been encouraged
+
+      // some kind of I/O error
+      // if (err) return console.log('Ooops!', err)
+
+      // console.log('LOGGED USER: ', screen_name)
+
+      // tweet a random encouragement phrase
+      // tweetNow('@' + screen_name + ' ' + phrase)
+      // })
+      // }
+      // })
     }
-
-    httpCall.send('txt=' + tweet.text).end((result) => {
-      let sentim = result.body.result.sentiment
-      let confidence = parseFloat(result.body.result.confidence)
-      // if sentiment is Negative and the confidence is above 75%
-      if (sentim == 'Negative' && confidence >= 75) {
-        console.log('====================')
-        console.log('SENTIMENT', sentim)
-        console.log('====================')
-        // get a random quote
-        let phrase = sentiment.randomQuote()
-        let screen_name = tweet.user.screen_name
-
-        // Check key isn't in db already, key being the screen_name
-        dbAddSentiment(tweet)
-        // db.get(screen_name, (err, value) => {
-
-        // if (typeof value !== 'undefined') {
-        //   console.log('ALREADY IN DB USER ', screen_name)
-        // } else {
-        // Put a user name and that they have been encouraged
-
-        // some kind of I/O error
-        // if (err) return console.log('Ooops!', err)
-
-        // console.log('LOGGED USER: ', screen_name)
-
-        // tweet a random encouragement phrase
-        tweetNow('@' + screen_name + ' ' + phrase)
-        // })
-        // }
-        // })
-      }
-    })
   })
+  // })
 }
 
 function tweetNow(text) {
