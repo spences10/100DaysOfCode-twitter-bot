@@ -20,6 +20,7 @@ sentiment.init = () => {
     .header('Accept', 'application/json')
 }
 
+// TODO does this need to be in here?
 sentiment.randomQuote = function() {
   // Get content from file
   let contents = fs.readFileSync('./src/helpers/quotes.json')

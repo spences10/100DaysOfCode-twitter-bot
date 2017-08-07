@@ -5,10 +5,10 @@ const endpoint = config.graphqlConfig.endpoint
 
 // use varibles to avoid breaking text being added
 // https://github.com/graphcool/graphql-request#using-variables
-const checkUser = (event) => {
+const checkSentiment = (event) => {
   const query = `query ($userName: String!) {
-    allTweets(filter: {userName: $userName}) {
-      id
+    allSentiments(filter: {userName: $userName}) {
+      encouraged
     }
   }`
 
@@ -19,10 +19,10 @@ const checkUser = (event) => {
   return request(endpoint, query, variables)
     .then((data) => {
       // console.log('returning data: ', data.allTweets.length)
-      console.log(data.allTweets)
-      return data.allTweets
+      console.log(data)
+      return data
     })
     .catch((err) => console.log('Error: ', err, 'Tweet Text: ', event.text, 'Mutation: ', mutation))
 }
 
-module.exports = checkUser
+module.exports = checkSentiment

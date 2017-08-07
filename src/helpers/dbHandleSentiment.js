@@ -20,14 +20,14 @@ const handleSentiment = (event) => {
   } else {
     // console.log(JSON.stringify(event.lang))
     // console.log(JSON.stringify(event))
-    checkTweet(event).then((data) => {
-      let count = data.length
-      if (!count >= 0) {
-        addTweet(event)
-        // retweet
-        retweet(event)
-      }
-    })
+    // checkTweet(event).then((data) => {
+    //   let count = data.length
+    //   if (!count >= 0) {
+    //     addTweet(event)
+    //     // retweet
+    //     retweet(event)
+    //   }
+    // })
   }
 }
 
