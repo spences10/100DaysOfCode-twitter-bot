@@ -21,10 +21,11 @@ const handleSentiment = (event) => {
   console.log('====================')
   if (
     event.lang.toString().trim() === config.twitterConfig.language.toString().trim() ||
-    event.in_reply_to_status_id ||
+    !event.in_reply_to_status_id ||
     blacklist.indexOf(event.screen_name) < 0
   ) {
     // do the thing
+    sentiment(event)
   } else {
     console.log('====================')
     console.log('HERE return')
@@ -32,7 +33,6 @@ const handleSentiment = (event) => {
     return
     // console.log(JSON.stringify(event.lang))
     // console.log(JSON.stringify(event))
-    sentiment()
     // dbAddSentiment()
     // checkTweet(event).then((data) => {
     //   let count = data.length
