@@ -6,10 +6,6 @@ const twit = require('twit')
 const bot = new twit(config.twitterKeys)
 const dbAddSentiment = require('../helpers/dbAddSentiment')
 
-// const hashtagStream2 = bot.stream('statuses/filter', {
-//   track: config.twitterConfig.queryString
-// })
-
 const sentimentBot = (event) => {
   console.log('====================')
   console.log('HERE', event.text)
@@ -19,19 +15,10 @@ const sentimentBot = (event) => {
 
   //  Setup the http call
   const httpCall = sentiment.init()
-
-  // Don't do anything if bot is in blacklist
-  // TODO add to handle tweet function
-  const blacklist = config.twitterConfig.blacklist.split(',')
-  if (blacklist.indexOf(event.user.screen_name) > -1) {
-    console.log('====================')
-    console.log('USER IN BLACKLIST: ', event.user.screen_name)
-    console.log('====================')
-    return
-  }
+  let sentim
 
   httpCall.send('txt=' + event.text).end((result) => {
-    let sentim = result.body.result.sentiment
+    sentim = result.body.result.sentiment
     let confidence = parseFloat(result.body.result.confidence)
     console.log('====================')
     console.log('SENTIMENT: ', sentim)
@@ -45,7 +32,6 @@ const sentimentBot = (event) => {
       // get a random quote
       let phrase = sentiment.randomQuote()
       let screen_name = event.user.screen_name
-      return sentim
       // Check key isn't in db already, key being the screen_name
       // dbAddSentiment(event)
       // db.get(screen_name, (err, value) => {
@@ -67,6 +53,7 @@ const sentimentBot = (event) => {
       // })
     }
   })
+  return sentim
   // })
 }
 

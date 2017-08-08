@@ -27,9 +27,6 @@ const handleSentiment = (event) => {
     // do the thing
     sentiment(event)
   } else {
-    console.log('====================')
-    console.log('HERE return')
-    console.log('====================')
     return
     // console.log(JSON.stringify(event.lang))
     // console.log(JSON.stringify(event))
