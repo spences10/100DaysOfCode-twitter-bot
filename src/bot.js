@@ -24,11 +24,11 @@ const favoriteFrequency = config.twitterConfig.favorite
 
 const firstOrLastDayFrequency = 40
 
-// Retweet
-setInterval(retweet, retweetFrequency)
+// // Retweet
+// setInterval(retweet, retweetFrequency)
 
-// Favorite
-setInterval(favorite, favoriteFrequency)
+// // Favorite
+// setInterval(favorite, favoriteFrequency)
 
 // Reply
 const userStream = bot.stream('user')

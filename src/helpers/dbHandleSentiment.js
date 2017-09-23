@@ -1,6 +1,6 @@
 const dbAddSentiment = require('./dbAddSentiment')
 const checkTweet = require('./dbCheckTweet')
-const sentiment = require('../api/sentiment')
+const sentimentBot = require('../api/sentiment')
 
 const config = require('../config')
 
@@ -13,19 +13,19 @@ const handleSentiment = (event) => {
   console.log('INDEX OF NAME IN BLACKLIST: ', blacklist.indexOf(event.user.screen_name))
   console.log('====================')
   console.log('====================')
-  console.log('First check: ', event.lang.toString().trim() === config.twitterConfig.language.toString().trim())
+  console.log('First check: ', event.lang.toString().trim() === config.twitterConfig.twitter_lang.toString().trim())
   console.log('First check: event lang=', event.lang.toString().trim())
-  console.log('First check: config lang=', config.twitterConfig.language.toString().trim())
+  console.log('First check: config lang=', config.twitterConfig.twitter_lang.toString().trim())
   console.log('Second check: ', !event.in_reply_to_status_id)
   console.log('Third check: ', blacklist.indexOf(event.screen_name) < 0)
   console.log('====================')
   if (
-    event.lang.toString().trim() === config.twitterConfig.language.toString().trim() ||
+    event.lang.toString().trim() === config.twitterConfig.twitter_lang.toString().trim() ||
     !event.in_reply_to_status_id ||
     blacklist.indexOf(event.screen_name) < 0
   ) {
     // do the thing
-    sentiment(event)
+    console.log('FUNK!!', sentimentBot.sentim(event))
   } else {
     return
     // console.log(JSON.stringify(event.lang))
