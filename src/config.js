@@ -20,7 +20,7 @@ module.exports = {
     twitter_lang: process.env.TWITTER_LANG,
     username: process.env.TWITTER_USERNAME,
     retweet: process.env.TWITTER_RETWEET_RATE * 1000 * 60,
-    favourite: process.env.TWITTER_FAVOURITE_RATE * 1000 * 60,
+    favorite: process.env.TWITTER_FAVORITE_RATE * 1000 * 60,
     follow: process.env.TWITTER_FOLLOW_RATE * 1000 * 60,
     searchCount: process.env.TWITTER_SEARCH_COUNT,
     randomReply: process.env.RANDOM_REPLY,
