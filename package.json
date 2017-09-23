@@ -10,7 +10,14 @@
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect"
   },
-  "keywords": [ "#100daysofcode", "Twitter", "JavaScript", "Nodejs", "npm", "retweet" ],
+  "keywords": [
+    "#100daysofcode",
+    "Twitter",
+    "JavaScript",
+    "Nodejs",
+    "npm",
+    "retweet"
+  ],
   "engines": {
     "node": "~6.1.0",
     "npm": "~.3.8.6"
