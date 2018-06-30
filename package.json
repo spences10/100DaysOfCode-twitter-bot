@@ -54,7 +54,7 @@
     "retext-english": "^3.0.0",
     "retext-sentiment": "^4.1.0",
     "snyk": "1.78.0",
-    "twit": "2.2.9",
+    "twit": "2.2.11",
     "unified": "^6.1.6",
     "unique-random-array": "1.0.1"
   },
